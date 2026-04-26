@@ -1,0 +1,28 @@
+{
+  "title": "Game Object Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the game object"
+    },
+    "type": {
+      "type": "string",
+      "description": "Class/type of the object (e.g., 'player', 'building', 'npc')"
+    },
+    "position": {
+      "type": "object",
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      },
+      "required": ["x", "y", "z"]
+    },
+    "properties": {
+      "type": "object",
+      "description": "Custom metadata or state for this specific object"
+    }
+  },
+  "required": ["id", "type", "position"]
+}

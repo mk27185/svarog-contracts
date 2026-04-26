@@ -1,0 +1,23 @@
+{
+  "title": "Player Event Schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of the event (e.g., 'player_move', 'item_pickup')"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp of the event"
+    },
+    "sender_id": {
+      "type": "string",
+      "description": "ID of the entity that triggered the event"
+    }
+  },
+  "required": ["type", "payload", "timestamp"]
+}

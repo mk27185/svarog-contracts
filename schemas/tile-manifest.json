@@ -1,0 +1,36 @@
+{
+  "title": "Tile Manifest Schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the manifest"
+    },
+    "zoom": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Maximum zoom level supported"
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["vector", "raster", "terrain"]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": ["name", "type", "url"]
+      }
+    }
+  },
+  "required": ["version", "zoom", "layers"]
+}
