@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Tile Manifest Schema",
   "type": "object",
   "properties": {
@@ -13,12 +14,11 @@
     },
     "layers": {
       "type": "array",
+      "description": "Map-serving layer descriptors (vector / raster / terrain)",
       "items": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string"
-          },
+          "name": { "type": "string" },
           "type": {
             "type": "string",
             "enum": ["vector", "raster", "terrain"]
@@ -29,6 +29,53 @@
           }
         },
         "required": ["name", "type", "url"]
+      }
+    },
+    "tiles": {
+      "type": "array",
+      "description": "Per-tile processing records produced by svarog-engine",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable tile identifier, used as output file prefix"
+          },
+          "bbox": {
+            "type": "array",
+            "description": "[south, west, north, east] in decimal degrees (WGS-84)",
+            "items": { "type": "number" },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "running", "completed", "failed"]
+          },
+          "outputs": {
+            "type": "object",
+            "description": "Paths to generated output files (null = not produced)",
+            "properties": {
+              "terrain":     { "type": ["string", "null"] },
+              "roads":       { "type": ["string", "null"] },
+              "buildings":   { "type": ["string", "null"] },
+              "sdf_texture": { "type": ["string", "null"] }
+            },
+            "additionalProperties": false
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO-8601 UTC timestamp of when this tile was processed"
+          },
+          "error": {
+            "type": "string",
+            "description": "Error message when status=failed"
+          }
+        },
+        "required": ["name", "bbox", "status"],
+        "if": { "properties": { "status": { "const": "failed" } }, "required": ["status"] },
+        "then": { "required": ["error"] }
       }
     }
   },

@@ -1,0 +1,27 @@
+{
+  "name": "svarog-contracts",
+  "version": "0.1.0",
+  "description": "Shared schemas and runtime constants for the Svarog ecosystem (single source of truth).",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schemas/*": "./schemas/*",
+    "./world-config.json": "./world-config.json"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "world-config.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.0"
+  }
+}

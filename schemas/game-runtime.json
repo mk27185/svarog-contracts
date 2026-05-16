@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "svarog-contracts/schemas/game-runtime.json",
+  "title": "Game runtime numeric defaults",
+  "description": "Mirror of src/game-runtime.ts — dokumentace a validace konfigurace (např. CI).",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "position_min_move_meters": {
+      "type": "number",
+      "minimum": 0,
+      "default": 4
+    },
+    "position_update_min_interval_ms": {
+      "type": "integer",
+      "minimum": 100,
+      "default": 2000
+    },
+    "nearby_radius_meters_default": {
+      "type": "number",
+      "minimum": 1,
+      "default": 300
+    }
+  },
+  "required": [
+    "position_min_move_meters",
+    "position_update_min_interval_ms",
+    "nearby_radius_meters_default"
+  ]
+}
