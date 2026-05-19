@@ -2,5 +2,5 @@
   "tile_size_m": 200,
   "draco": true,
   "upsample_factor": 10,
-  "load_radius_tiles": 5
+  "load_radius_tiles": 7
 }
