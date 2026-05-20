@@ -56,10 +56,11 @@
             "type": "object",
             "description": "Paths to generated output files (null = not produced)",
             "properties": {
-              "terrain":     { "type": ["string", "null"] },
-              "roads":       { "type": ["string", "null"] },
-              "buildings":   { "type": ["string", "null"] },
-              "sdf_texture": { "type": ["string", "null"] }
+              "terrain":           { "type": ["string", "null"] },
+              "roads":             { "type": ["string", "null"] },
+              "buildings":         { "type": ["string", "null"] },
+              "sdf_texture":       { "type": ["string", "null"] },
+              "landcover_texture": { "type": ["string", "null"] }
             },
             "additionalProperties": false
           },
