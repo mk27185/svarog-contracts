@@ -1,0 +1,35 @@
+{
+  "position_min_move_meters": 4,
+  "position_update_min_interval_ms": 2000,
+  "nearby_radius_meters_default": 300,
+  "gps": {
+    "enable_high_accuracy": true,
+    "maximum_age_ms": 1000,
+    "timeout_ms": 20000,
+    "display_min_move_meters": 15,
+    "display_min_interval_ms": 400,
+    "kalman": {
+      "process_noise_accel": 1.5,
+      "default_measurement_noise_m": 8,
+      "max_measurement_noise_m": 80,
+      "max_innovation_m": 60,
+      "initial_velocity_variance": 4
+    }
+  },
+  "camera": {
+    "default_rotation_mode": "sensor",
+    "min_distance": 30,
+    "max_distance": 8000,
+    "min_elevation": 10,
+    "max_elevation": 80,
+    "default_distance": 500,
+    "default_elevation": 45,
+    "default_azimuth": 0,
+    "compass_calibration_deg": -45,
+    "fov": 50
+  },
+  "tiles": {
+    "load_batch_size": 4,
+    "load_min_interval_ms": 800
+  }
+}

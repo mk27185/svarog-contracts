@@ -1,30 +1,139 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "svarog-contracts/schemas/game-runtime.json",
-  "title": "Game runtime numeric defaults",
-  "description": "Mirror of src/game-runtime.ts — dokumentace a validace konfigurace (např. CI).",
+  "title": "Game runtime defaults",
+  "description": "Mirror of game-runtime.json — client/server GPS, camera, position sync.",
   "type": "object",
   "additionalProperties": false,
+  "required": [
+    "position_min_move_meters",
+    "position_update_min_interval_ms",
+    "nearby_radius_meters_default",
+    "gps",
+    "camera",
+    "tiles"
+  ],
   "properties": {
     "position_min_move_meters": {
       "type": "number",
       "minimum": 0,
-      "default": 4
+      "description": "Min distance (m) before sending position to server."
     },
     "position_update_min_interval_ms": {
       "type": "integer",
       "minimum": 100,
-      "default": 2000
+      "description": "Min interval (ms) between server position updates."
     },
     "nearby_radius_meters_default": {
       "type": "number",
       "minimum": 1,
-      "default": 300
+      "description": "Default radius for nearby-player queries."
+    },
+    "gps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enable_high_accuracy",
+        "maximum_age_ms",
+        "timeout_ms",
+        "display_min_move_meters",
+        "display_min_interval_ms",
+        "kalman"
+      ],
+      "properties": {
+        "enable_high_accuracy": { "type": "boolean" },
+        "maximum_age_ms": { "type": "integer", "minimum": 0 },
+        "timeout_ms": { "type": "integer", "minimum": 1000 },
+        "display_min_move_meters": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Min move (m) before updating on-screen position."
+        },
+        "display_min_interval_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Min interval (ms) between on-screen position updates."
+        },
+        "kalman": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "process_noise_accel",
+            "default_measurement_noise_m",
+            "max_measurement_noise_m",
+            "max_innovation_m",
+            "initial_velocity_variance"
+          ],
+          "properties": {
+            "process_noise_accel": {
+              "type": "number",
+              "minimum": 0.01,
+              "description": "Expected acceleration noise (m/s²) for the motion model."
+            },
+            "default_measurement_noise_m": {
+              "type": "number",
+              "minimum": 0.1,
+              "description": "Fallback GPS accuracy (m) when the device reports none."
+            },
+            "max_measurement_noise_m": {
+              "type": "number",
+              "minimum": 1,
+              "description": "Upper cap on assumed GPS accuracy (m)."
+            },
+            "max_innovation_m": {
+              "type": "number",
+              "minimum": 1,
+              "description": "Reject GPS fixes farther than this from the filtered estimate (m)."
+            },
+            "initial_velocity_variance": {
+              "type": "number",
+              "minimum": 0.01,
+              "description": "Initial velocity uncertainty (m²/s²) after the first fix."
+            }
+          }
+        }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_rotation_mode",
+        "min_distance",
+        "max_distance",
+        "min_elevation",
+        "max_elevation",
+        "default_distance",
+        "default_elevation",
+        "default_azimuth",
+        "compass_calibration_deg",
+        "fov"
+      ],
+      "properties": {
+        "default_rotation_mode": { "enum": ["sensor", "manual"] },
+        "min_distance": { "type": "number", "minimum": 1 },
+        "max_distance": { "type": "number", "minimum": 10 },
+        "min_elevation": { "type": "number", "minimum": 0, "maximum": 90 },
+        "max_elevation": { "type": "number", "minimum": 0, "maximum": 90 },
+        "default_distance": { "type": "number", "minimum": 1 },
+        "default_elevation": { "type": "number", "minimum": 0, "maximum": 90 },
+        "default_azimuth": { "type": "number" },
+        "compass_calibration_deg": { "type": "number" },
+        "fov": { "type": "number", "minimum": 10, "maximum": 120 }
+      }
+    },
+    "tiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["load_batch_size", "load_min_interval_ms"],
+      "properties": {
+        "load_batch_size": { "type": "integer", "minimum": 1, "maximum": 16 },
+        "load_min_interval_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Throttle tile window reloads while moving."
+        }
+      }
     }
-  },
-  "required": [
-    "position_min_move_meters",
-    "position_update_min_interval_ms",
-    "nearby_radius_meters_default"
-  ]
+  }
 }

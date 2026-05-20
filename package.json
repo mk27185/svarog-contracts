@@ -11,12 +11,24 @@
       "import": "./dist/index.js"
     },
     "./schemas/*": "./schemas/*",
-    "./world-config.json": "./world-config.json"
+    "./world-config.json": {
+      "types": "./world-config.d.ts",
+      "import": "./world-config.json",
+      "default": "./world-config.json"
+    },
+    "./game-runtime.json": {
+      "types": "./game-runtime.d.ts",
+      "import": "./game-runtime.json",
+      "default": "./game-runtime.json"
+    }
   },
   "files": [
     "dist",
     "schemas",
-    "world-config.json"
+    "world-config.json",
+    "world-config.d.ts",
+    "game-runtime.json",
+    "game-runtime.d.ts"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
